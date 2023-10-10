@@ -43,6 +43,8 @@ class _CalcUIState extends State<CalcUI> {
         children: <Widget>[
           Expanded(
             child: Container(
+          
+              // color: Colors.blue,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
@@ -50,7 +52,8 @@ class _CalcUIState extends State<CalcUI> {
                   children: [
                     SizedBox(height: 30),
                     Container(
-                      alignment: Alignment.centerRight,
+                      // color: Colors.amber,
+                      alignment: Alignment.centerLeft,
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         userQuestion,
@@ -61,6 +64,7 @@ class _CalcUIState extends State<CalcUI> {
                       ),
                     ),
                     Container(
+                      // color: Colors.amber,
                       alignment: Alignment.centerRight,
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
