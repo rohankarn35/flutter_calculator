@@ -14,33 +14,40 @@ class _CalcUIState extends State<CalcUI> {
   String userAns = '';
   final List<String> buttons = [
     'C',
-    'DEL',
-    '%',
-    '/',
     '√',      // Square root
     '^',      // Exponentiation
-    'sin',    // Sine
+    'sin', 
+    'DEL',
+ 
+       // Sine
     'cos',    
     'tan',    
     'log',    
     'ln', 
+       '%',
     '9',
     '8',
     '7',
+    '/',
+
     'x',
     '6',
     '5',
     '4',
+    '+',
     '-',
+    
+
     '3',
     '2',
     '1',
-    '+',
+      '(',
+  ')',
+   '.',
     '0',
     '00',
-    '.',
-    '(',
-  ')',
+   
+  
     'ANS',
     '=',
      
@@ -112,7 +119,7 @@ class _CalcUIState extends State<CalcUI> {
                       textColor: Colors.black,
                       buttonText: buttons[index],
                     );
-                  } else if (index == 1) {
+                  } else if (index == 4) {
                     return MyButtons(
                       onTap: () {
                         setState(() {
@@ -175,7 +182,7 @@ class _CalcUIState extends State<CalcUI> {
   }
 
   bool isOperator(String s) {
-    if (s == '%' || s == '/' || s == 'x' || s == '-' || s == '+' || s == '=') {
+    if (s == '%' || s == '/' || s == 'x' || s == '-' || s == '+' || s == '=' || s == '('|| s == ')' || s == '^' || s == 'cos' || s == 'tan' || s == 'log' || s == 'ln' || s == 'sin' || s ==  '√') {
       return true;
     } else {
       return false;
@@ -189,12 +196,12 @@ class _CalcUIState extends State<CalcUI> {
     // Replace custom symbols with standard mathematical symbols
     finalQuestion = finalQuestion.replaceAll('x', '*');
     finalQuestion = finalQuestion.replaceAll('√', 'sqrt');
-    finalQuestion = finalQuestion.replaceAll('^', '**');
-    finalQuestion = finalQuestion.replaceAll('sin', 'sin(');
-    finalQuestion = finalQuestion.replaceAll('cos', 'cos(');
-    finalQuestion = finalQuestion.replaceAll('tan', 'tan(');
-    finalQuestion = finalQuestion.replaceAll('log', 'log(');
-    finalQuestion = finalQuestion.replaceAll('ln', 'ln(');
+    // finalQuestion = finalQuestion.replaceAll('^', '**');
+    // finalQuestion = finalQuestion.replaceAll('sin', 'sin(');
+    // finalQuestion = finalQuestion.replaceAll('cos', 'cos(');
+    // finalQuestion = finalQuestion.replaceAll('tan', 'tan(');
+    // finalQuestion = finalQuestion.replaceAll('log', 'log(');
+    // finalQuestion = finalQuestion.replaceAll('ln', 'ln(');
 
     Parser p = Parser();
     Expression exp = p.parse(finalQuestion);
