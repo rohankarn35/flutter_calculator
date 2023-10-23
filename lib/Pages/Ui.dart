@@ -17,6 +17,13 @@ class _CalcUIState extends State<CalcUI> {
     'DEL',
     '%',
     '/',
+    '√',      // Square root
+    '^',      // Exponentiation
+    'sin',    // Sine
+    'cos',    
+    'tan',    
+    'log',    
+    'ln', 
     '9',
     '8',
     '7',
@@ -30,9 +37,13 @@ class _CalcUIState extends State<CalcUI> {
     '1',
     '+',
     '0',
+    '00',
     '.',
+    '(',
+  ')',
     'ANS',
     '=',
+     
   ];
 
   @override
@@ -45,39 +56,36 @@ class _CalcUIState extends State<CalcUI> {
             child: Container(
           
               // color: Colors.blue,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(height: 30),
-                    Container(
-                      // color: Colors.amber,
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        userQuestion,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(height: 30),
+                  Container(
+                    // color: Colors.amber,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      userQuestion,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
                       ),
                     ),
-                    Container(
-                      // color: Colors.amber,
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        userAns,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  ),
+                  Container(
+                    // color: Colors.amber,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      userAns,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -87,7 +95,7 @@ class _CalcUIState extends State<CalcUI> {
               child: GridView.builder(
                 itemCount: buttons.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
+                  crossAxisCount: 5,
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
@@ -174,24 +182,31 @@ class _CalcUIState extends State<CalcUI> {
     }
   }
 
-  void evaluate() {
+ void evaluate() {
   try {
     String finalQuestion = userQuestion;
+
+    // Replace custom symbols with standard mathematical symbols
     finalQuestion = finalQuestion.replaceAll('x', '*');
+    finalQuestion = finalQuestion.replaceAll('√', 'sqrt');
+    finalQuestion = finalQuestion.replaceAll('^', '**');
+    finalQuestion = finalQuestion.replaceAll('sin', 'sin(');
+    finalQuestion = finalQuestion.replaceAll('cos', 'cos(');
+    finalQuestion = finalQuestion.replaceAll('tan', 'tan(');
+    finalQuestion = finalQuestion.replaceAll('log', 'log(');
+    finalQuestion = finalQuestion.replaceAll('ln', 'ln(');
+
     Parser p = Parser();
     Expression exp = p.parse(finalQuestion);
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
 
-    // Convert the result to a string with 7 decimal places
     String result = eval.toStringAsFixed(10);
-
-    // Remove trailing zeros after the last non-zero digit after the decimal place
     result = result.replaceAll(RegExp(r'(?<=\d)0*$'), '');
 
     userAns = result;
-     if (eval % 1 == 0) {
-      userAns = eval.toInt().toString(); // Convert to integer if decimal is zero
+    if (eval % 1 == 0) {
+      userAns = eval.toInt().toString();
     }
   } catch (e) {
     userAns = 'Error';
